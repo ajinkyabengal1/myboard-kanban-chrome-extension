@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyBoard - New Tab</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link id="app-favicon" rel="icon" type="image/png" href="icons/icon48.png">
+</head>
+<body>
+  <!-- Fullscreen Dynamic Wallpaper -->
+  <div id="bg-container"></div>
+  <div id="bg-overlay"></div>
+
+  <!-- App Root -->
+  <div id="app-root">
+    <!-- Collapsible Left Sidebar (Matching Screenshot 1) -->
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-title">My Boards</span>
+      </div>
+
+      <div id="boards-list" class="boards-list">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="sidebar-footer">
+        <button id="settings-btn" class="sidebar-action-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>Settings</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <main id="main-canvas">
+      <!-- Top Center Bar: Google Search + Timer + Theme Toggle -->
+      <header class="top-nav-bar">
+        <div class="top-left-controls">
+          <button id="menu-toggle-btn" class="control-pill-btn" title="Toggle Sidebar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="top-center-cluster">
+          <!-- Google Search Bar -->
+          <form id="search-form" class="search-container">
+            <div class="search-glass-pill">
+              <!-- Google "G" Colored Icon -->
+              <svg class="google-icon" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              <input
+                id="search-input"
+                class="search-input"
+                type="text"
+                placeholder="Search Google or enter URL..."
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <button type="button" id="search-clear-btn" class="search-clear-btn">✕</button>
+            </div>
+          </form>
+
+          <!-- Productivity Timer / Stopwatch -->
+          <div id="timer-widget" class="timer-widget">
+            <button id="timer-mode-toggle" class="timer-mode-btn" title="Click to customize focus duration or switch mode">
+              <span id="timer-mode-label">Focus (25m)</span>
+              <svg class="timer-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <span id="timer-display" class="timer-digits">00:00</span>
+            <button id="timer-toggle-btn" class="timer-action-btn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <span>Start</span>
+            </button>
+            <button id="timer-reset-btn" class="timer-reset-btn" title="Reset Timer">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+              </svg>
+            </button>
+
+            <!-- Focus Duration & Timer Settings Popover -->
+            <div id="timer-settings-popover" class="timer-settings-popover hidden" role="dialog" aria-label="Timer settings">
+              <div class="timer-popover-header">
+                <span class="timer-popover-title">Focus & Timer Settings</span>
+                <button type="button" id="close-timer-popover-btn" class="timer-popover-close-btn" title="Close">✕</button>
+              </div>
+
+              <!-- Mode Switcher Tabs -->
+              <div class="timer-mode-tabs">
+                <button type="button" class="timer-tab-btn" data-mode="focus">Focus Timer</button>
+                <button type="button" class="timer-tab-btn" data-mode="stopwatch">Stopwatch</button>
+              </div>
+
+              <!-- Focus Mode Options -->
+              <div id="focus-options-section" class="focus-options-section">
+                <div class="timer-section-label">Preset Duration</div>
+                <div class="timer-presets-grid">
+                  <button type="button" class="timer-preset-btn" data-minutes="5">5m</button>
+                  <button type="button" class="timer-preset-btn" data-minutes="10">10m</button>
+                  <button type="button" class="timer-preset-btn" data-minutes="15">15m</button>
+                  <button type="button" class="timer-preset-btn" data-minutes="20">20m</button>
+                  <button type="button" class="timer-preset-btn" data-minutes="25">25m</button>
+                  <button type="button" class="timer-preset-btn" data-minutes="30">30m</button>
+                  <button type="button" class="timer-preset-btn" data-minutes="45">45m</button>
+                  <button type="button" class="timer-preset-btn" data-minutes="60">60m</button>
+                </div>
+
+                <div class="timer-section-label">Custom Duration</div>
+                <div class="timer-custom-input-group">
+                  <div class="timer-input-wrapper">
+                    <input
+                      type="number"
+                      id="timer-custom-minutes-input"
+                      class="timer-custom-minutes-input"
+                      min="1"
+                      max="360"
+                      placeholder="Minutes"
+                    />
+                    <span class="timer-input-suffix">min</span>
+                  </div>
+                  <button type="button" id="timer-custom-set-btn" class="timer-custom-set-btn">Set</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Quick Controls -->
+        <div class="top-right-controls">
+          <span id="header-clock" class="clock-display"></span>
+          <button id="theme-toggle-btn" class="control-pill-btn" title="Toggle Theme">
+            <!-- Icon injected by JS -->
+          </button>
+          <button id="next-bg-btn" class="control-pill-btn" title="Next Wallpaper">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+          </button>
+          <button id="clipboard-toggle-btn" class="control-pill-btn active" title="Toggle Clipboard & Sticky Notes">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+              <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+              <line x1="9" y1="12" x2="15" y2="12"></line>
+              <line x1="9" y1="16" x2="13" y2="16"></line>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Workspace Body: Kanban Viewport + Sticky Notes Clipboard Dock -->
+      <div class="workspace-body">
+        <!-- Kanban Section (Matching Screenshots 1 & 2) -->
+        <section class="board-viewport">
+          <div class="board-headline">
+            <h1 id="board-title" class="board-title" contenteditable="true" spellcheck="false" title="Click to rename board">
+              My Daily Board
+            </h1>
+          </div>
+
+          <!-- Columns Horizontal Scroll Container -->
+          <div id="kanban-columns" class="kanban-columns-scroll">
+            <!-- Columns rendered dynamically by kanban.js -->
+          </div>
+        </section>
+
+        <!-- Right End Clipboard & Sticky Notes Panel -->
+        <aside id="clipboard-panel" class="clipboard-panel">
+          <!-- Clipboard Header -->
+          <div class="clipboard-header">
+            <div class="clipboard-header-left">
+              <div class="clipboard-title-wrap">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                  <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                </svg>
+                <span class="clipboard-title">Quick Clipboard</span>
+              </div>
+              <span id="clipboard-count" class="clipboard-badge">0 notes</span>
+            </div>
+
+            <div class="clipboard-header-actions">
+              <button id="clear-notes-btn" class="clipboard-icon-btn" title="Clear all notes">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </button>
+
+              <button id="close-clipboard-btn" class="clipboard-icon-btn" title="Minimize Panel">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Note Composer -->
+          <div class="clipboard-composer">
+            <textarea
+              id="clipboard-input"
+              class="clipboard-textarea"
+              placeholder="Paste text or write sticky note... (Enter to add)"
+              rows="2"
+            ></textarea>
+            <div class="composer-toolbar">
+              <div class="sticky-color-swatches" id="sticky-color-picker">
+                <button type="button" class="color-swatch-dot active" data-color="yellow" style="background: #facc15;" title="Yellow Sticky"></button>
+                <button type="button" class="color-swatch-dot" data-color="blue" style="background: #60a5fa;" title="Blue Sticky"></button>
+                <button type="button" class="color-swatch-dot" data-color="green" style="background: #4ade80;" title="Green Sticky"></button>
+                <button type="button" class="color-swatch-dot" data-color="purple" style="background: #c084fc;" title="Purple Sticky"></button>
+                <button type="button" class="color-swatch-dot" data-color="coral" style="background: #fb7185;" title="Coral Sticky"></button>
+                <button type="button" class="color-swatch-dot" data-color="glass" style="background: rgba(255,255,255,0.4);" title="Frosted Glass"></button>
+              </div>
+              <button id="add-note-btn" class="add-note-btn">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>Add</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Notes Stream -->
+          <div id="clipboard-notes-list" class="clipboard-notes-list">
+            <!-- Dynamically populated by clipboard.js -->
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title">MyBoard Settings</h2>
+        <button id="close-settings-btn" class="icon-btn">✕</button>
+      </div>
+
+      <!-- Browser Tab Favicon Customization -->
+      <div class="setting-group">
+        <label class="setting-label">Browser Tab Favicon</label>
+        <p class="setting-desc">Customize the favicon icon displayed in your browser tab:</p>
+        <div class="setting-favicon-row">
+          <div class="setting-favicon-preview-wrap">
+            <div class="mock-browser-tab">
+              <img id="setting-favicon-preview" src="icons/icon48.png" alt="Favicon Preview">
+              <span class="mock-tab-title">MyBoard - New Tab</span>
+            </div>
+          </div>
+          <div class="setting-favicon-actions">
+            <div class="setting-favicon-btn-row">
+              <label class="btn-secondary favicon-upload-btn" style="cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <span>Upload Favicon</span>
+                <input id="setting-favicon-file-input" type="file" accept="image/*,image/x-icon,image/svg+xml" style="display: none;">
+              </label>
+              <button type="button" id="reset-favicon-btn" class="btn-ghost" style="color: #f87171; display: none;">Reset Default</button>
+            </div>
+            <div class="setting-favicon-url-row" style="display: flex; gap: 8px; margin-top: 6px;">
+              <input id="setting-favicon-url-input" class="setting-input" type="url" placeholder="Or enter favicon URL (https://...)" autocomplete="off">
+              <button type="button" id="apply-favicon-url-btn" class="btn-secondary" style="white-space: nowrap;">Apply URL</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <label class="setting-label">Wallpaper Customization</label>
+        <p class="setting-desc">Every new tab rotates through curated 4K wallpapers. Or enter your custom image URL below:</p>
+        <div style="display: flex; gap: 8px;">
+          <input id="setting-custom-bg" class="setting-input" type="url" placeholder="https://example.com/wallpaper.jpg">
+          <button id="apply-custom-bg-btn" class="btn-secondary" style="white-space: nowrap;">Apply</button>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <label class="setting-label">Data Management</label>
+        <p class="setting-desc">Export or import your boards, columns, and task cards (JSON):</p>
+        <div style="display: flex; gap: 10px; margin-top: 6px;">
+          <button id="export-data-btn" class="btn-secondary">Export JSON</button>
+          <label class="btn-secondary" style="cursor: pointer; display: inline-flex; align-items: center;">
+            Import JSON
+            <input id="import-data-input" type="file" accept=".json" style="display: none;">
+          </label>
+        </div>
+      </div>
+
+      <div class="setting-group" style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--modal-border);">
+        <label class="setting-label" style="color: #ef4444;">Danger Zone</label>
+        <p class="setting-desc">Reset all boards and preferences back to initial state:</p>
+        <button id="reset-all-btn" class="btn-danger">Reset to Defaults</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script Modules -->
+  <script src="js/backgrounds.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/kanban.js"></script>
+  <script src="js/clipboard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
